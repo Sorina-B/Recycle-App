@@ -1,8 +1,5 @@
 # Android Project
-## Student Information
-Name: Buzila Sorina-Maria
-Student ID: 1280
-Course: Android Development
+
 ## Project Title
 Recycle App
 ## Description

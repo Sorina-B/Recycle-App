@@ -1,5 +1,4 @@
-
-package  com.example.recycleapp
+package com.example.recycleapp.utils
 
 import android.content.Context
 import android.content.Intent

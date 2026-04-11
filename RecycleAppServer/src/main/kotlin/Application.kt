@@ -54,10 +54,14 @@ suspend fun handleClientConnection(socket: Socket,repository: DatabaseHandler) {
             if (command == "SCAN") {
                 val databaseResponse = repository.getProductInfo(barcode)
                 if (databaseResponse != null && databaseResponse.status == 1 && databaseResponse.product != null) {
-                    val packaging = databaseResponse.product.packaging ?: "Unknown packaging"
-                    sendChannel.writeStringUtf8("FOUND|$packaging\n")
+                    val rawMaterial=databaseResponse.product.packaging
+                        ?:databaseResponse.product.packaging_text
+                        ?:""
+                    val productName=databaseResponse.product.product_name?:"Unknown Product"
+                    val instructions =generateRecyclingInstructions(rawMaterial)
+                    sendChannel.writeStringUtf8("FOUND|$productName|$instructions\n")
                 } else {
-                    sendChannel.writeStringUtf8("ERROR|Product not found\n")
+                    sendChannel.writeStringUtf8("ERROR|Product not found|Try scanning another item.\n")
                 }
             } else if (command == "QUIT") {
                 sendChannel.writeStringUtf8("BYE|\n")
@@ -73,4 +77,31 @@ suspend fun handleClientConnection(socket: Socket,repository: DatabaseHandler) {
         socket.close()
         println("Android App disconnected")
     }
+}
+
+fun generateRecyclingInstructions(packagingString:String?):String{
+    if(packagingString.isNullOrBlank()){
+        return "No packaging data found for this item. Please check the label."
+    }
+    val lowerCasePck=packagingString.lowercase()
+    val instructions=mutableListOf<String>()
+    if(listOf("cardboard","paper","box","carton","hartie").any{it in lowerCasePck}){
+        instructions.add("Carboard/Paper: Flatten and put in the blue recycling bin. Throw it in the BLUE BIN.")
+    }
+    if(listOf("pet","bottle","plastic 1","jug","plastic","bidon").any{it in lowerCasePck}){
+        instructions.add("Hard Plastic/PET Bottles:Empty, rinse, and recycle. Keep caps on.Throw it in the YELLOW BIN.")
+    }
+    if(listOf("wrapper","film","bag","sachet","punga").any{it in lowerCasePck}){
+        instructions.add("Soft Plastic/Wrappers: Throw in the YELLOW BIN.")
+    }
+    if(listOf("aluminum","can","tin","doza","metal","conserva").any{it in lowerCasePck}){
+        instructions.add("Aluminum/Metal Can: Empty and recycle. Do not crush.Throw it in the YELLOW BIN.")
+    }
+    if(listOf("glass","jar","borcan","sticla").any{it in lowerCasePck}){
+        instructions.add("Glass:Rinse and clean and put in the glass recycling bin. Remove lids.Throw it in the GREEN BIN.")
+    }
+    if(instructions.isEmpty()){
+        return "Material identified as $packagingString. Please check your local guideline. "
+    }
+    return instructions.joinToString(" | ")
 }

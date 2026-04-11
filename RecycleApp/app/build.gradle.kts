@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -43,7 +44,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
-
+    implementation(platform("com.google.firebase:firebase-bom:34.11.0"))
+    implementation(libs.firebase.auth)
     implementation(libs.mlkit.barcode.scanning)
 
     implementation("androidx.camera:camera-camera2:1.5.3")
@@ -51,7 +53,11 @@ dependencies {
     implementation("androidx.camera:camera-view:1.5.3")
 
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.database)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
 }

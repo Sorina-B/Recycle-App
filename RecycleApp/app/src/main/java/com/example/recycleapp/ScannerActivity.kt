@@ -24,14 +24,12 @@ import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.Executors
 
 class ScannerActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityScannerBinding
     private lateinit var cameraSelector: CameraSelector
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var processCameraProvider: ProcessCameraProvider
     private lateinit var cameraPreview: Preview
     private lateinit var imageAnalysis: ImageAnalysis
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityScannerBinding.inflate(layoutInflater)

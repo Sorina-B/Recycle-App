@@ -12,13 +12,12 @@ import androidx.core.content.ContextCompat
 fun Context.isPermissionGranted(permission: String): Boolean {
     return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
-//functia verifica daca utilizatorul a dat deja permisiunea de folosire a camerei
 
-inline fun Context.cameraPermissionRequest(crossinline positive: ()->Unit){ //trimitem ca parametru o functie(crossinline) - positive este numele functiei, ()-tipul returnat, unit echivlent cu null
+inline fun Context.cameraPermissionRequest(crossinline positive: ()->Unit){
     AlertDialog.Builder(this)
         .setTitle("Camera Permission Required")
         .setMessage("Without accessing the camera it is not possible to scan the barcode.")
-        .setPositiveButton("Allow Camera"){_, _ -> positive.invoke()} //daca este apasat butonul ok, vom activa functia data(openPermissionSettings) ca parametru
+        .setPositiveButton("Allow Camera"){_, _ -> positive.invoke()}
         .setNegativeButton("Cancel"){dialog, _ -> dialog.dismiss()}.show()
 
 }
@@ -29,5 +28,4 @@ fun Context.openPermissionSetting(){
         intent.data=uri
         startActivity(intent)
     }
-    //if the permission is denied, you need to open the setting for it to be permitted
 }

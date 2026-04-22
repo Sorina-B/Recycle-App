@@ -2,7 +2,6 @@ package com.example.recycleapp
 
 import android.content.Intent
 import android.os.Bundle
-
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -49,6 +48,8 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
 
         firebaseDatabase=FirebaseDatabase.getInstance().reference
         auth=Firebase.auth
@@ -117,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Scanning barcode: $barcode", Toast.LENGTH_SHORT).show()
         lifecycleScope.launch(Dispatchers.IO) {
             try{
-                val serverIp="192.168.100.4"
+                val serverIp="10.191.160.58"
                 val port=8080
                 val socket=Socket(serverIp,port)
                 val wirter=PrintWriter(socket.getOutputStream(),true)

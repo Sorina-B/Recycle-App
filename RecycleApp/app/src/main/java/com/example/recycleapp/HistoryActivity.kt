@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recycleapp.databinding.ActivityHistoryBinding
+import com.example.recycleapp.utils.HistoryAdapter
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
@@ -40,8 +41,7 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun fetchHistoryData() {
         val uid = Firebase.auth.currentUser?.uid ?: return
-        val historyRef =
-            FirebaseDatabase.getInstance().reference.child("users").child(uid).child("history")
+        val historyRef =FirebaseDatabase.getInstance().reference.child("users").child(uid).child("history")
         historyRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 historyList.clear()

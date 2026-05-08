@@ -1,5 +1,5 @@
 /build
 # Secret files and API keys
-app/google-services.json
+google-services.json
 local.properties
 .env

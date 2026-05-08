@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "883561713503",
+    "firebase_url": "https://recycleappdatabase-a76b6-default-rtdb.firebaseio.com",
     "project_id": "recycleappdatabase-a76b6",
     "storage_bucket": "recycleappdatabase-a76b6.firebasestorage.app"
   },
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAaWvsexkLlxxTySL4E9GKvNUmYTixKA20"
+          "current_key": "AIzaSyA1ISOxzLxGnin7B6ISO26186treptYzSY"
         }
       ],
       "services": {
